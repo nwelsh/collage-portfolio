@@ -29,10 +29,10 @@ export default function Home() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: '1rem'
+          gap: "1rem",
         }}
       >
-        <h1 className={craftyGirls.className}>Collages</h1>
+        <h1 style={{fontSize: '2rem'}}className={craftyGirls.className}>nicole's girly scrapbook</h1>
 
         <button
           onClick={() => inputRef.current?.click()}
@@ -44,7 +44,7 @@ export default function Home() {
             color: "white",
           }}
         >
-          Upload Collages
+          Upload
         </button>
       </div>
 
@@ -63,20 +63,21 @@ export default function Home() {
           marginTop: 30,
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-          gap: 20,
+          gap: 50,
         }}
       >
         {images.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt=""
-            style={{
-              width: "100%",
-              borderRadius: 12,
-              objectFit: "cover",
-            }}
-          />
+          <div key={i} className="collage">
+            <img
+              src={src}
+              alt=""
+              style={{
+                width: "100%",
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+          </div>
         ))}
       </div>
     </main>
