@@ -1,6 +1,12 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Crafty_Girls } from "next/font/google";
+
+const craftyGirls = Crafty_Girls({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
@@ -10,7 +16,7 @@ export default function Home() {
     if (!files) return;
 
     const newImages = Array.from(files).map((file) =>
-      URL.createObjectURL(file)
+      URL.createObjectURL(file),
     );
 
     setImages((prev) => [...prev, ...newImages]);
@@ -18,11 +24,29 @@ export default function Home() {
 
   return (
     <main style={{ padding: 32 }}>
-      <h1>My Collages</h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: '1rem'
+        }}
+      >
+        <h1 className={craftyGirls.className}>Collages</h1>
 
-      <button onClick={() => inputRef.current?.click()}>
-        Upload Images
-      </button>
+        <button
+          onClick={() => inputRef.current?.click()}
+          className={craftyGirls.className}
+          style={{
+            padding: ".5rem",
+            background: "#e500ce",
+            borderRadius: "1rem",
+            color: "white",
+          }}
+        >
+          Upload Collages
+        </button>
+      </div>
 
       <input
         ref={inputRef}
