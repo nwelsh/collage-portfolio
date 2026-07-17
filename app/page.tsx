@@ -10,7 +10,7 @@ const craftyGirls = Crafty_Girls({
 
 // TODO
 // store images
-// upload OR take pic 
+// upload OR take pic
 
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
@@ -36,7 +36,9 @@ export default function Home() {
           gap: ".5rem",
         }}
       >
-        <h1 style={{fontSize: '2rem'}}className={craftyGirls.className}>nicole's girly scrapbook</h1>
+        <h1 style={{ fontSize: "2rem" }} className={craftyGirls.className}>
+          nicole's girly scrapbook
+        </h1>
 
         <button
           onClick={() => inputRef.current?.click()}
@@ -57,7 +59,6 @@ export default function Home() {
         type="file"
         accept="image/*"
         multiple
-        capture="environment"
         hidden
         onChange={(e) => handleFiles(e.target.files)}
       />
@@ -66,9 +67,9 @@ export default function Home() {
         style={{
           marginTop: 30,
           display: "flex",
-          flexDirection: 'row',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
+          flexDirection: "row",
+          justifyContent: "center",
+          flexWrap: "wrap",
           gap: 35,
         }}
       >
