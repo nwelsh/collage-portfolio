@@ -8,6 +8,10 @@ const craftyGirls = Crafty_Girls({
   subsets: ["latin"],
 });
 
+// TODO
+// store images
+// upload OR take pic 
+
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,7 +33,7 @@ export default function Home() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "1rem",
+          gap: ".5rem",
         }}
       >
         <h1 style={{fontSize: '2rem'}}className={craftyGirls.className}>nicole's girly scrapbook</h1>
@@ -61,9 +65,11 @@ export default function Home() {
       <div
         style={{
           marginTop: 30,
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-          gap: 50,
+          display: "flex",
+          flexDirection: 'row',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          gap: 35,
         }}
       >
         {images.map((src, i) => (

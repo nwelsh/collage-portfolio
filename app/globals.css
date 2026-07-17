@@ -26,8 +26,8 @@ body {
 }
 
 .collage {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  max-width: 500px;
   overflow: hidden;
 
   /* scalloped edge */
