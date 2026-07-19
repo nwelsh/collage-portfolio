@@ -11,6 +11,8 @@
     fill="white"
   />
 
+  <!-- Create a crinkle cut mask for images -->
+
   <!-- Bottom -->
   <circle cx="5" cy="5" r="5" fill="black" />
   <circle cx="15" cy="5" r="5" fill="black" />
