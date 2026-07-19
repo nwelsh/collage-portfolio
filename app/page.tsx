@@ -135,11 +135,11 @@ export default function Home() {
             />
 
             <button
-              onClick={() => deleteImage(i)}
+              className="delete-button"
               style={{
                 position: "absolute",
-                top: 8,
-                right: 8,
+                top: 16,
+                right: 16,
                 background: "white",
                 border: "none",
                 borderRadius: "50%",
@@ -147,6 +147,7 @@ export default function Home() {
                 height: 30,
                 cursor: "pointer",
               }}
+              onClick={() => deleteImage(i)}
             >
               ✕
             </button>

@@ -45,3 +45,15 @@ body {
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
 }
+
+
+.photo .delete-button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.photo:hover .delete-button {
+  opacity: 1;
+  pointer-events: auto;
+}
