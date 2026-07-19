@@ -2,6 +2,9 @@
 
 import { useRef, useState } from "react";
 import { Crafty_Girls } from "next/font/google";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect } from "react";
 
 const craftyGirls = Crafty_Girls({
   weight: "400",
@@ -10,7 +13,8 @@ const craftyGirls = Crafty_Girls({
 
 // TODO
 // store images
-// upload OR take pic
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
@@ -25,6 +29,17 @@ export default function Home() {
 
     setImages((prev) => [...prev, ...newImages]);
   }
+
+  useEffect(() => {
+    gsap.from(".photo", {
+      opacity: 0,
+      scale: 0.8,
+      rotation: gsap.utils.random(-8, 8),
+      duration: 0.6,
+      stagger: 0.08,
+      ease: "back.out(1.7)",
+    });
+  }, [images]);
 
   return (
     <main style={{ padding: 32 }}>
@@ -74,7 +89,7 @@ export default function Home() {
         }}
       >
         {images.map((src, i) => (
-          <div key={i} className="collage">
+          <div key={i} className="photo">
             <img
               src={src}
               alt=""
