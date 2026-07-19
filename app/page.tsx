@@ -1,33 +1,61 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Crafty_Girls } from "next/font/google";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect } from "react";
 
 const craftyGirls = Crafty_Girls({
   weight: "400",
   subsets: ["latin"],
 });
 
-// TODO
-// store images
-
 gsap.registerPlugin(ScrollTrigger);
+
+const STORAGE_KEY = "scrapbook-images";
 
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Load saved images when page opens
+  useEffect(() => {
+    const savedImages = sessionStorage.getItem(STORAGE_KEY);
+
+    if (savedImages) {
+      setImages(JSON.parse(savedImages));
+    }
+  }, []);
+
+  // Save images whenever they change
+  useEffect(() => {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(images));
+  }, [images]);
+
   function handleFiles(files: FileList | null) {
     if (!files) return;
 
-    const newImages = Array.from(files).map((file) =>
-      URL.createObjectURL(file),
-    );
+    const fileArray = Array.from(files);
 
-    setImages((prev) => [...prev, ...newImages]);
+    Promise.all(
+      fileArray.map((file) => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+
+          reader.onload = () => {
+            resolve(reader.result as string);
+          };
+
+          reader.readAsDataURL(file);
+        });
+      }),
+    ).then((newImages) => {
+      setImages((prev) => [...prev, ...newImages]);
+    });
+  }
+
+  function deleteImage(index: number) {
+    setImages((prev) => prev.filter((_, i) => i !== index));
   }
 
   useEffect(() => {
@@ -82,14 +110,20 @@ export default function Home() {
         style={{
           marginTop: 30,
           display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
           flexWrap: "wrap",
+          justifyContent: "center",
           gap: 35,
         }}
       >
         {images.map((src, i) => (
-          <div key={i} className="photo">
+          <div
+            key={i}
+            className="photo"
+            style={{
+              position: "relative",
+              width: 250,
+            }}
+          >
             <img
               src={src}
               alt=""
@@ -99,6 +133,23 @@ export default function Home() {
                 display: "block",
               }}
             />
+
+            <button
+              onClick={() => deleteImage(i)}
+              style={{
+                position: "absolute",
+                top: 8,
+                right: 8,
+                background: "white",
+                border: "none",
+                borderRadius: "50%",
+                width: 30,
+                height: 30,
+                cursor: "pointer",
+              }}
+            >
+              ✕
+            </button>
           </div>
         ))}
       </div>
