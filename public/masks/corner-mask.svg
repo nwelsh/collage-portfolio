@@ -11,10 +11,51 @@
     fill="white"
   />
 
-  <circle cx="5" cy="5" r="2" fill="black" />
-  <circle cx="95" cy="5" r="2" fill="black" />
-  <circle cx="95" cy="95" r="2" fill="black" />
-  <circle cx="5" cy="95" r="2" fill="black" />
-  <!-- <circle cx="5" cy="50" r="2" fill="black" /> -->
+  <!-- Bottom -->
+  <circle cx="5" cy="5" r="5" fill="black" />
+  <circle cx="15" cy="5" r="5" fill="black" />
+  <circle cx="25" cy="5" r="5" fill="black" />
+  <circle cx="35" cy="5" r="5" fill="black" />
+  <circle cx="45" cy="5" r="5" fill="black" />
+  <circle cx="55" cy="5" r="5" fill="black" />
+  <circle cx="65" cy="5" r="5" fill="black" />
+  <circle cx="75" cy="5" r="5" fill="black" />
+  <circle cx="85" cy="5" r="5" fill="black" />
+  
+
+  <!-- Right -->
+  <circle cx="95" cy="5" r="5" fill="black" />
+  <circle cx="95" cy="15" r="5" fill="black" />
+  <circle cx="95" cy="25" r="5" fill="black" />
+  <circle cx="95" cy="35" r="5" fill="black" />
+  <circle cx="95" cy="45" r="5" fill="black" />
+  <circle cx="95" cy="55" r="5" fill="black" />
+  <circle cx="95" cy="65" r="5" fill="black" />
+  <circle cx="95" cy="75" r="5" fill="black" />
+  <circle cx="95" cy="85" r="5" fill="black" />
+
+  <!-- Top -->
+  <circle cx="95" cy="95" r="5" fill="black" />
+  <circle cx="85" cy="95" r="5" fill="black" />
+  <circle cx="75" cy="95" r="5" fill="black" />
+  <circle cx="65" cy="95" r="5" fill="black" />
+  <circle cx="55" cy="95" r="5" fill="black" />
+  <circle cx="45" cy="95" r="5" fill="black" />
+  <circle cx="35" cy="95" r="5" fill="black" />
+  <circle cx="25" cy="95" r="5" fill="black" />
+  <circle cx="15" cy="95" r="5" fill="black" />
+  <circle cx="5" cy="95" r="5" fill="black" />
+
+  <!-- Left -->
+  <circle cx="5" cy="95" r="5" fill="black" />
+  <circle cx="5" cy="85" r="5" fill="black" />
+  <circle cx="5" cy="75" r="5" fill="black" />
+  <circle cx="5" cy="65" r="5" fill="black" />
+  <circle cx="5" cy="55" r="5" fill="black" />
+  <circle cx="5" cy="45" r="5" fill="black" />
+  <circle cx="5" cy="35" r="5" fill="black" />
+  <circle cx="5" cy="25" r="5" fill="black" />
+  <circle cx="5" cy="15" r="5" fill="black" />
+  <circle cx="5" cy="5" r="5" fill="black" />
 
 </svg>
