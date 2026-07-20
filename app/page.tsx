@@ -14,9 +14,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 const STORAGE_KEY = "scrapbook-images";
 
+// TODO
+// Storage
+// Deploy
+
 export default function Home() {
   const [images, setImages] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const mask =
+    process.env.NODE_ENV === "production"
+      ? "/collage-portfolio/masks/corner-mask.svg"
+      : "/masks/corner-mask.svg";
 
   // Load saved images when page opens
   useEffect(() => {
@@ -126,11 +134,11 @@ export default function Home() {
           >
             <img
               src={src}
-              alt=""
               style={{
-                width: "100%",
-                objectFit: "cover",
-                display: "block",
+                WebkitMaskImage: `url(${mask})`,
+                maskImage: `url(${mask})`,
+                WebkitMaskSize: "100% 100%",
+                maskSize: "100% 100%",
               }}
             />
 
