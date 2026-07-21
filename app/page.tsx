@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { Crafty_Girls } from "next/font/google";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "./lib/superbase";
 
 const craftyGirls = Crafty_Girls({
   weight: "400",
