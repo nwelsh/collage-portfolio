@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { Crafty_Girls } from "next/font/google";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { supabase } from "@/lib/supabase";
 
 const craftyGirls = Crafty_Girls({
   weight: "400",
@@ -12,58 +13,64 @@ const craftyGirls = Crafty_Girls({
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STORAGE_KEY = "scrapbook-images";
-
 // TODO
 // Storage
 // Deploy
 
 export default function Home() {
-  const [images, setImages] = useState<string[]>([]);
+  type Image = {
+    id: string;
+    url: string;
+    path: string;
+  };
+
+  const [images, setImages] = useState<Image[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const mask =
     process.env.NODE_ENV === "production"
       ? "/collage-portfolio/masks/corner-mask.svg"
       : "/masks/corner-mask.svg";
 
-  // Load saved images when page opens
-  useEffect(() => {
-    const savedImages = sessionStorage.getItem(STORAGE_KEY);
-
-    if (savedImages) {
-      setImages(JSON.parse(savedImages));
-    }
-  }, []);
-
-  // Save images whenever they change
-  useEffect(() => {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(images));
-  }, [images]);
-
-  function handleFiles(files: FileList | null) {
+  async function handleFiles(files: FileList | null) {
     if (!files) return;
 
-    const fileArray = Array.from(files);
+    for (const file of Array.from(files)) {
+      const extension = file.name.split(".").pop();
 
-    Promise.all(
-      fileArray.map((file) => {
-        return new Promise<string>((resolve) => {
-          const reader = new FileReader();
+      const path = `${crypto.randomUUID()}.${extension}`;
 
-          reader.onload = () => {
-            resolve(reader.result as string);
-          };
+      const { error: uploadError } = await supabase.storage
+        .from("scrapbook")
+        .upload(path, file);
 
-          reader.readAsDataURL(file);
-        });
-      }),
-    ).then((newImages) => {
-      setImages((prev) => [...prev, ...newImages]);
-    });
+      if (uploadError) {
+        console.error(uploadError);
+        continue;
+      }
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("scrapbook").getPublicUrl(path);
+
+      const { error: dbError } = await supabase.from("images").insert({
+        url: publicUrl,
+        path,
+      });
+
+      if (dbError) {
+        console.error(dbError);
+      }
+    }
+
+    loadImages();
   }
 
-  function deleteImage(index: number) {
-    setImages((prev) => prev.filter((_, i) => i !== index));
+  async function deleteImage(image: Image) {
+    await supabase.storage.from("scrapbook").remove([image.path]);
+
+    await supabase.from("images").delete().eq("id", image.id);
+
+    loadImages();
   }
 
   useEffect(() => {
@@ -76,6 +83,24 @@ export default function Home() {
       ease: "back.out(1.7)",
     });
   }, [images]);
+
+  useEffect(() => {
+    loadImages();
+  }, []);
+
+  async function loadImages() {
+    const { data, error } = await supabase
+      .from("images")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setImages(data);
+  }
 
   return (
     <main style={{ padding: 32 }}>
@@ -123,9 +148,9 @@ export default function Home() {
           gap: 35,
         }}
       >
-        {images.map((src, i) => (
+        {images.map((image) => (
           <div
-            key={i}
+            key={image}
             className="photo"
             style={{
               position: "relative",
@@ -133,7 +158,8 @@ export default function Home() {
             }}
           >
             <img
-              src={src}
+              src={image.url}
+              alt=""
               style={{
                 WebkitMaskImage: `url(${mask})`,
                 maskImage: `url(${mask})`,
@@ -144,6 +170,7 @@ export default function Home() {
 
             <button
               className="delete-button"
+              onClick={() => deleteImage(image)}
               style={{
                 position: "absolute",
                 top: 16,
@@ -155,7 +182,6 @@ export default function Home() {
                 height: 30,
                 cursor: "pointer",
               }}
-              onClick={() => deleteImage(i)}
             >
               ✕
             </button>
