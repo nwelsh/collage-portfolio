@@ -14,8 +14,7 @@ const craftyGirls = Crafty_Girls({
 gsap.registerPlugin(ScrollTrigger);
 
 // TODO
-// Storage
-// Deploy
+// Fix Storage
 
 export default function Home() {
   type Image = {
