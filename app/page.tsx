@@ -112,7 +112,7 @@ export default function Home() {
         }}
       >
         <h1 style={{ fontSize: "2rem" }} className={craftyGirls.className}>
-          nicole's girly scrapbook
+          nicole's july highlights
         </h1>
 
         <button
